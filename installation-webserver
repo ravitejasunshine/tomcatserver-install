@@ -1,0 +1,90 @@
+Apache tomcat setup & configuration
+
+
+<role rolename="manager-gui"/>
+<user username="xyz" password="abc" roles="manager-gui"/>
+
+
+Amazon ami2 successfully installed
+
+login = ec2-user
+
+- sudo su
+- yum update -y
+- java --version
+- yum install java-1.8*
+
+- tomcat download
+- tar.gz file
+- wget <link>
+- mv apache.tar.gz /opt/
+- ls
+- cd /opt/
+- tar -zvxf apache.tar.gz 
+- ls
+- rm apache.tar.gz
+- pwd
+- cd apache
+- cd bin
+- sh startup.sh (start the server)
+- sh shutdown.sh (stop  the server)
+shortcuts for start and stop
+-  ln -s /opt/apache-tomcat-8.5.66/bin/startup.sh /usr/bin/tomcatstart
+-  ln -s /opt/apache-tomcat-8.5.66/bin/shutdown.sh /usr/bin/tomcatstop
+-  cd /home/ec2-user/
+To find the context.xml file
+- find / -name context.xml
+- cd /opt/apache-tomcat-8.5.66/webapps/host-manager/META-INF/context.xml
+- cd /opt/apache-tomcat-8.5.66/webapps/manager/META-INF/context.xml
+- cd /opt/apache-tomcat-8.5.66/conf/
+- cp tomcat-users.xml tomcat-users.xml.bkp
+- vi tomcat-users.xml
+<role rolename="manager-gui"/>
+<role rolename="manager-status"/>
+<user username="admin" password="admin" roles="manager-gui, manager-script, manager-status"/>
+<user username="tomcat" password="s3cret" roles="manager-gui"/>
+
+Change the port number
+
+- cd conf/
+- ls
+- vim server.xml
+change the connector port 8080 ==> 8090 
+- stop and run the server
+- tomcatstart
+
+successfully installed and configured
+
+- jenkins installation on tomcatserver
+
+go to jenkins.io website
+
+copy link .warfile
+
+wget <link>
+
+cd /opt/apache-tomcat-8.5.66/webapps/
+ls
+cp /home/ec2-user/jenkins.war
+ls
+
+refresh the tomcat browser
+--------------------------------------------------------------------
+
+jenkins:
+
+>> java -jar jenkins.war --httpPort=9090
+
+>> java -jar jenkins.war (default port 8080)
+
+>> How to create users + manage + assign roles
+
+step 1:  create new users
+
+step 2: Configure users
+
+step 3: Create and manage user roles
+Roles strategy plugin - download - restart jenkins
+
+step 4: Manage jenkins -> Configure Global security -> Enable security -> Autherization -> Role-based Strategy
+ 
